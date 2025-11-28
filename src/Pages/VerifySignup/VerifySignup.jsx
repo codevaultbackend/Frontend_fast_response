@@ -10,12 +10,12 @@ function VerifySignup() {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const BACKEND_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const BACKEND_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleChange = (e, index) => {
     const value = e.target.value.replace(/\D/, "");
     if (value.length > 1) return;
+
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -42,15 +42,16 @@ function VerifySignup() {
     try {
       setLoading(true);
       setError("");
+
       const response = await axios.post(`${BACKEND_URL}/auth/verify-otp`, {
         email,
         otp: otpCode,
       });
 
       setSuccess(response.data.message);
+
       setTimeout(() => {
         navigate("/");
-
         localStorage.removeItem("signupEmail");
       }, 1200);
     } catch (err) {
@@ -63,17 +64,20 @@ function VerifySignup() {
   };
 
   const handleResend = async () => {
-    const email = localStorage.getItem("resetEmail");
+    const email = localStorage.getItem("signupEmail"); // FIXED
     if (!email) {
       setError("Email not found. Please go back and re-enter your email.");
       return;
     }
+
     try {
       setLoading(true);
       setError("");
-      const res = await axios.post(`${BACKEND_URL}/forget/resend-otp`, {
+
+      const res = await axios.post(`${BACKEND_URL}/auth/resend-otp`, {
         email,
       });
+
       setSuccess(res.data.message || "OTP resent successfully.");
     } catch (err) {
       setError(err.response?.data?.message || "Failed to resend OTP.");
@@ -93,8 +97,9 @@ function VerifySignup() {
           />
         </div>
 
-        <div className="flex flex-col max-w-[1280px] h-[550px] m-auto md:flex-row w-full mb-[100px] ">
+        <div className="flex flex-col max-w-[1280px] h-[550px] m-auto md:flex-row w-full mb-[100px]">
           <div className="w-[50%] h-[540px] md:w-1/2 flex flex-col justify-center items-center bg-[var(--background-color)] max-[980px]:w-[100%] px-3.5">
+
             <div className="flex items-center w-full max-w-md">
               <Link to="/login">
                 <button className="text-[var(--text-color)] hover:text-gray-900 text-sm flex gap-[10px] mb-[20px] items-center font-semibold">
@@ -102,7 +107,7 @@ function VerifySignup() {
                     <img
                       src={assets.forgetPasswordicon}
                       className="!h-[12px] w-[9px]"
-                      alt="forgetpassword"
+                      alt="back"
                     />
                   </span>
                   Back to Login
@@ -111,14 +116,14 @@ function VerifySignup() {
             </div>
 
             <div className="w-full max-w-md">
-              <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-color)] mb-[22px] font-[var(--font-family)]">
+              <h2 className="text-2xl md:text-3xl font-semibold text-[var(--text-color)] mb-[22px]">
                 Verify code
               </h2>
-              <p className="text-[var(--text-color)] text-sm md:text-base !text-[14px] font-[var(--font-family)]">
+              <p className="text-[var(--text-color)] text-sm md:text-base">
                 An authentication code has been sent to your email.
               </p>
 
-              {/* OTP Input Boxes */}
+              {/* OTP Inputs */}
               <div className="flex gap-[20px] flex-wrap justify-center my-[20px]">
                 {otp.map((digit, i) => (
                   <input
@@ -128,7 +133,7 @@ function VerifySignup() {
                     value={digit}
                     maxLength={1}
                     onChange={(e) => handleChange(e, i)}
-                    className="h-[35px] w-[35px] border-[2px] !border-gray-500 text-center rounded-[7px] outline-0 text-[18px]"
+                    className="h-[35px] w-[35px] border-[2px] border-gray-500 text-center rounded-[7px] outline-0 text-[18px]"
                   />
                 ))}
               </div>
@@ -168,7 +173,7 @@ function VerifySignup() {
             <img
               src={assets.Loginbanner2}
               alt="banner"
-              className="w-[450px] h-full !rounded-[4px]"
+              className="w-[450px] h-full rounded-[4px]"
             />
           </div>
         </div>

@@ -28,17 +28,6 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const token = query.get("token");
-    const email = query.get("email");
-    if (token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("signupEmail", email);
-      navigate("/client");
-    }
-  }, [location, navigate]);
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -57,17 +46,14 @@ function Register() {
 
     try {
       setLoading(true);
-      const res = await axios.post(
-        `${API_URL}/auth/client-register`,
-        {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-        }
-      );
+      const res = await axios.post(`${API_URL}/auth/client-register`, {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
 
       if (res.status === 200 || res.data.success) {
         localStorage.setItem("signupEmail", formData.email);

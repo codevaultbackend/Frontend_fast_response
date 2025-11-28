@@ -40,13 +40,10 @@ function Login() {
 
     try {
       setLoading(true);
-      const res = await axios.post(
-        `${API_URL}/auth/login`,
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+      const res = await axios.post(`${API_URL}/auth/login`, {
+        email: formData.email,
+        password: formData.password,
+      });
 
       if (res.data?.token) {
         localStorage.setItem("authToken", res.data.token);
@@ -80,7 +77,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `${API_URL}/auth/google`;
+    window.location.href = `${API_URL}/auth/google?role=client`;
   };
 
   const handleFacebookLogin = () => {
@@ -89,11 +86,25 @@ function Login() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const token = params.get("token");
+    const token = params.get("authToken");
+
+    console.log(token);
+
     if (token) {
       localStorage.setItem("authToken", token);
       localStorage.setItem("userRole", "client");
-      navigate("/", { replace: true });
+
+      window.location.href = "/";
+    }
+  }, [location, navigate]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("authToken");
+
+    if (token) {
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("userRole", "client");
+      window.location.href = "/";
     }
   }, [location, navigate]);
 
@@ -124,7 +135,6 @@ function Login() {
       </div>
 
       <div className="flex lg:flex-row max-w-full w-full mx-auto py-[20px] gap-[15px] px-[8px] justify-center gap-[70px] px-[50px] max-[500px]:px-[10px] mt-[20px]">
-      
         <form
           onSubmit={handleSubmit}
           className="w-full lg:w-1/2 flex flex-col max-w-[460px]"

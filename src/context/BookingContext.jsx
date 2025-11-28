@@ -44,7 +44,6 @@ export function BookingProvider({ children }) {
 
       setCreatedWork(res.data.work);
 
-      // Ensure each technician has availableSlots
       setTechnicians(
         (res.data.matchingTechnicians || []).map((tech) => ({
           ...tech,

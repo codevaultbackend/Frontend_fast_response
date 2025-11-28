@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -46,6 +46,17 @@ function AppContent() {
   const role = localStorage.getItem("userRole");
   const [mobileSideView, setMobileSideView] = useState(false);
 
+    useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((reg) => console.log("SW registered:", reg))
+          .catch((err) => console.log("SW registration failed:", err));
+      });
+    }
+  }, []); 
+
   const hideOnRoutes = [
     "/login",
     "/signup",
@@ -64,13 +75,11 @@ function AppContent() {
 
   return (
     <>
-    {
-      role === 'client' && (
+      {role === "client" && (
         <>
-        <HomeCrm />
+          <HomeCrm />
         </>
-      )
-    }
+      )}
       <MobileSidebar
         mobileSideView={mobileSideView}
         setMobileSideView={setMobileSideView}
@@ -108,7 +117,7 @@ function AppContent() {
         <Route path="/TrackOrderRecords/:id" element={<TrackOrderRecords />} />
         <Route path="/Not-Found" element={<Page404 />} />
 
-        {/* Protected Routes */}
+        
         {role === "technician" && (
           <Route path="/TechnicianView" element={<Technician />}>
             <Route index element={<TechnicianOrder />} />
@@ -134,7 +143,6 @@ function AppContent() {
           </Route>
         )}
 
-    
         <Route
           path="/verifyOtp"
           element={

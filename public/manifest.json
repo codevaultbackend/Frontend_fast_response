@@ -1,0 +1,31 @@
+{
+  "short_name": "FastResponse",
+  "name": "Fast Response Technician Service",
+  "icons": [
+    {
+      "src": "/icons/maskable_icon_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/maskable_icon_x384 (1).png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/maskable_icon_x384 (1).png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "description": "Fast Response Technician Service - Book professional services instantly",
+  "categories": ["utilities", "productivity"]
+}

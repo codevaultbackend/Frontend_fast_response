@@ -146,13 +146,13 @@ function Offer() {
       <div className="flex justify-end mb-4">
         <button
           ref={leftBtnRef}
-          className="bg-white rounded-full mx-1 w-[35px] h-[35px] text-[#4a5565] text-lg font-bold flex items-center justify-center hover:bg-gray-500 transition"
+          className="bg-white rounded-full mx-1 w-[35px] h-[35px] text-[#4a5565] text-lg font-bold flex items-center justify-center hover:bg-gray-500 hover:text-[#fff] transition"
         >
           ‹
         </button>
         <button
           ref={rightBtnRef}
-          className="bg-white rounded-full mx-1 w-[35px] h-[35px] text-[#4a5565] text-lg font-bold flex items-center justify-center hover:bg-gray-500 transition"
+          className="bg-white rounded-full mx-1 w-[35px] h-[35px] text-[#4a5565] text-lg font-bold flex items-center justify-center hover:bg-gray-500 hover:text-[#fff] transition"
         >
           ›
         </button>
